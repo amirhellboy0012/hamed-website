@@ -2,707 +2,735 @@
 <html lang="fa" dir="rtl">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TiMxStore</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: #0a0a0f;
-      --card-bg: #1a1a24;
-      --text-color: #ffffff;
-      --primary-color: #3b82f6;
-      --primary-hover: #2563eb;
-      --input-bg: #2d2d3d;
-      --border-color: #2d2d3d;
-      --success-color: #10b981;
-      --error-color: #ef4444;
-      --transition: all 0.3s ease;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiMxStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0f;
+            --card-bg: #1a1a24;
+            --text-color: #ffffff;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --input-bg: #2d2d3d;
+            --border-color: #2d2d3d;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --transition: all 0.3s ease;
+        }
 
-    [data-theme="light"] {
-      --bg-color: #fff5eb;
-      --card-bg: #ffffff;
-      --text-color: #1e293b;
-      --primary-color: #f97316;
-      --primary-hover: #ea580c;
-      --input-bg: #ffffff;
-      --border-color: #ffedd5;
-      --success-color: #059669;
-    }
+        [data-theme="light"] {
+            --bg-color: #fff5eb;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary-color: #f97316;
+            --primary-hover: #ea580c;
+            --input-bg: #ffffff;
+            --border-color: #ffedd5;
+            --success-color: #059669;
+        }
 
-    * {
-      box-sizing: border-box;
-      transition: var(--transition);
-    }
+        * {
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
 
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.5;
-      min-height: 100vh;
-    }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
 
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      color: var(--text-color);
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-    }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
 
-    .theme-toggle:hover {
-      transform: translateY(-2px);
-    }
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-    .auth-page,
-    .main-content {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
+        .auth-page,
+        .main-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
 
-    .active {
-      display: block;
-    }
+        .active {
+            display: block;
+        }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .auth-card {
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 30px;
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
+        .auth-card {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
 
-    .error-message {
-      color: var(--error-color);
-      margin-top: 10px;
-      font-size: 14px;
-      display: none;
-    }
+        .error-message {
+            color: var(--error-color);
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 40px;
-      margin: 0 auto;
-      max-width: 1200px;
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
 
-    .card {
-      background-color: var(--card-bg);
-      padding: 32px;
-      border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      cursor: default;
-    }
+        .card {
+            background-color: var(--card-bg);
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            cursor: default;
+        }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-    .input-group {
-      margin-bottom: 24px;
-      position: relative;
-    }
+        .input-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
 
-    input,
-    select {
-      width: 100%;
-      padding: 14px;
-      background-color: var(--input-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-color);
-      font-size: 15px;
-    }
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 15px;
+        }
 
-    /* فیلدهای readonly به صورت چپ‌به‌راست و فضای کافی در سمت راست برای دکمه کپی */
-    input[readonly] {
-      padding-left: 14px;
-      padding-right: 40px;
-      cursor: default;
-      direction: ltr;
-      text-align: left;
-    }
+        /* فیلدهای readonly به صورت چپ‌به‌راست و فضای کافی در سمت راست برای دکمه کپی */
+        input[readonly] {
+            padding-left: 14px;
+            padding-right: 40px;
+            cursor: default;
+            direction: ltr;
+            text-align: left;
+        }
 
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
-    }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background-color: var(--primary-color);
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 500;
-      text-decoration: none;
-      font-size: 15px;
-    }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 15px;
+        }
 
-    .btn:hover {
-      background-color: var(--primary-hover);
-      transform: translateY(-2px);
-    }
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
 
-    /* دکمه دانلود سرورهای WireGuard */
-    .download-btn {
-      margin-right: 10px;
-      font-size: 13px;
-      padding: 8px 16px;
-    }
+        /* دکمه دانلود سرورهای WireGuard */
+        .download-btn {
+            margin-right: 10px;
+            font-size: 13px;
+            padding: 8px 16px;
+        }
 
-    /* دکمه کپی در سمت راست داخل فیلد */
-    .copy-button {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--primary-color);
-      cursor: pointer;
-      padding: 5px;
-      transition: transform 0.3s ease;
-    }
+        /* دکمه کپی در سمت راست داخل فیلد */
+        .copy-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s ease;
+        }
 
-    /* انیمیشن تغییر آیکون کپی به تیک */
-    @keyframes scaleCheck {
-      0% {
-        transform: scale(0.8);
-      }
+        /* انیمیشن تغییر آیکون کپی به تیک */
+        @keyframes scaleCheck {
+            0% {
+                transform: scale(0.8);
+            }
 
-      50% {
-        transform: scale(1.2);
-      }
+            50% {
+                transform: scale(1.2);
+            }
 
-      100% {
-        transform: scale(1);
-      }
-    }
+            100% {
+                transform: scale(1);
+            }
+        }
 
-    .copy-button.animate {
-      animation: scaleCheck 0.5s ease;
-    }
+        .copy-button.animate {
+            animation: scaleCheck 0.5s ease;
+        }
 
-    .server-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      background-color: var(--input-bg);
-      justify-content: space-between;
-    }
+        .server-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            background-color: var(--input-bg);
+            justify-content: space-between;
+        }
 
-    .server-option:hover {
-      border-color: var(--primary-color);
-      transform: translateX(-5px);
-    }
+        .server-option:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+        }
 
-    .server-option.selected {
-      border-color: var(--primary-color);
-      background-color: rgba(249, 115, 22, 0.1);
-    }
+        .server-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(249, 115, 22, 0.1);
+        }
 
-    .success-message {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 24px;
-      background-color: var(--success-color);
-      color: #fff;
-      border-radius: 8px;
-      display: none;
-      z-index: 1000;
-      animation: slideIn 0.3s ease;
-    }
+        .success-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: var(--success-color);
+            color: #fff;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
 
-    @keyframes slideIn {
-      from {
-        transform: translateY(100%);
-        opacity: 0;
-      }
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
 
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    @media (max-width: 880px) {
-      .grid {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-      }
+        @media (max-width: 880px) {
+            .grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
 
-      .container {
-        padding: 20px 10px;
-      }
+            .container {
+                padding: 20px 10px;
+            }
 
-      .card {
-        padding: 20px;
-      }
-    }
-  </style>
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <!-- دکمه تغییر تم -->
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="تغییر تم">
-    <i class="fas fa-moon"></i>
-  </button>
+    <!-- دکمه تغییر تم -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="تغییر تم">
+        <i class="fas fa-moon"></i>
+    </button>
 
-  <div class="container">
-    <!-- صفحه ورود -->
-    <div class="auth-page active" id="authPage">
-      <div class="auth-card">
-        <h2>ورود</h2>
-        <form id="loginForm">
-          <div class="input-group">
-            <label for="username">نام کاربری</label>
-            <input type="text" id="username" required>
-          </div>
-          <div class="input-group">
-            <label for="password">رمز عبور</label>
-            <input type="password" id="password" required>
-          </div>
-          <div class="error-message" id="loginError">
-            نام کاربری یا رمز عبور اشتباه است.
-          </div>
-          <button type="submit" class="btn">
-            <i class="fas fa-sign-in-alt"></i>
-            ورود
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- محتوای اصلی -->
-    <div class="main-content" id="mainContent">
-      <div class="grid">
-        <!-- تنظیمات WireGuard -->
-        <div class="card">
-          <h2><i class="fas fa-shield-alt"></i> تنظیمات WireGuard</h2>
-          <div class="input-group">
-            <label>انتخاب سرور</label>
-            <div class="server-options" id="serverOptions">
-              <div class="server-option" data-server-id="1">
-                <span>
-                  <i class="fas fa-server"></i>
-                  سرور 1 - المان 1
-                </span>
-                <a class="btn download-btn" href="https://krakenfiles.com/view/zMjdIKackb/file.html" target="_blank" onclick="event.stopPropagation()">دانلود</a>
-              </div>
-              <div class="server-option" data-server-id="2">
-                <span>
-                  <i class="fas fa-server"></i>
-                  سرور 2 - المان 2
-                </span>
-                <a class="btn download-btn" href="https://krakenfiles.com/view/Q5oO4FLzqj/file.html" target="_blank" onclick="event.stopPropagation()">دانلود</a>
-              </div>
+    <div class="container">
+        <!-- صفحه ورود -->
+        <div class="auth-page active" id="authPage">
+            <div class="auth-card">
+                <h2>ورود</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="username">نام کاربری</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">رمز عبور</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="error-message" id="loginError">
+                        نام کاربری یا رمز عبور اشتباه است.
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        ورود
+                    </button>
+                </form>
             </div>
-          </div>
         </div>
 
-        <!-- تنظیمات DNS -->
-        <div class="card">
-          <h2><i class="fas fa-globe"></i> تنظیمات DNS</h2>
-          <div class="input-group">
-            <label for="country">انتخاب کشور</label>
-            <select id="country">
-              <option value="us">ایالات متحده</option>
-              <option value="uk">انگلستان</option>
-              <option value="de">آلمان</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>IPv4 اصلی</label>
-            <input type="text" id="ipv4Primary" readonly>
-            <button class="copy-button" onclick="copyToClipboard('ipv4Primary', this)" aria-label="کپی">
-              <i class="far fa-copy"></i>
-            </button>
-          </div>
-          <div class="input-group">
-            <label>IPv4 ثانویه</label>
-            <input type="text" id="ipv4Secondary" readonly>
-            <button class="copy-button" onclick="copyToClipboard('ipv4Secondary', this)" aria-label="کپی">
-              <i class="far fa-copy"></i>
-            </button>
-          </div>
-          <div class="input-group">
-            <label>IPv6 اصلی</label>
-            <input type="text" id="ipv6Primary" readonly>
-            <button class="copy-button" onclick="copyToClipboard('ipv6Primary', this)" aria-label="کپی">
-              <i class="far fa-copy"></i>
-            </button>
-          </div>
-          <div class="input-group">
-            <label>IPv6 ثانویه</label>
-            <input type="text" id="ipv6Secondary" readonly>
-            <button class="copy-button" onclick="copyToClipboard('ipv6Secondary', this)" aria-label="کپی">
-              <i class="far fa-copy"></i>
-            </button>
-          </div>
-          <button class="btn" id="generateDNSBtn">
-            <i class="fas fa-sync-alt"></i>
-            تولید DNS
-          </button>
-        </div>
+        <!-- محتوای اصلی -->
+        <div class="main-content" id="mainContent">
+            <div class="grid">
+                <!-- تنظیمات WireGuard -->
+                <div class="card">
+                    <h2><i class="fas fa-shield-alt"></i> تنظیمات WireGuard</h2>
+                    <div class="input-group">
+                        <label>انتخاب سرور</label>
+                        <div class="server-options" id="serverOptions">
+                            <div class="server-option" data-server-id="1">
+                                <span>
+                                    <i class="fas fa-server"></i>
+                                    سرور 1 - المان 1
+                                </span>
+                                <a class="btn download-btn" href="https://krakenfiles.com/view/9DWcKoua7p/file.html"
+                                    target="_blank" onclick="event.stopPropagation()">دانلود</a>
+                            </div>
+                            <div class="server-option" data-server-id="2">
+                                <span>
+                                    <i class="fas fa-server"></i>
+                                    سرور 2 - المان 2
+                                </span>
+                                <a class="btn download-btn" href="https://krakenfiles.com/view/APQ1CFAGVo/file.html"
+                                    target="_blank" onclick="event.stopPropagation()">دانلود</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- تنظیمات سرور سوئد -->
-        <div class="card">
-          <h2><i class="fas fa-server"></i> سرور سوئد</h2>
-          <div class="input-group">
-            <label>IPv4</label>
-            <input type="text" id="swedenIPv4" readonly>
-          </div>
-          <div class="input-group">
-            <label>IPv6-1</label>
-            <input type="text" id="swedenIPv6_1" readonly>
-          </div>
-          <div class="input-group">
-            <label>IPv6-2</label>
-            <input type="text" id="swedenIPv6_2" readonly>
-          </div>
-          <button class="btn" onclick="generateSwedenIPs()">
-            <i class="fas fa-sync-alt"></i>
-            تولید IPها
-          </button>
-          <button class="btn" onclick="copySwedenIPs()">
-            <i class="far fa-copy"></i>
-            کپی به کلیپ‌بورد
-          </button>
+                <!-- تنظیمات DNS -->
+                <div class="card">
+                    <h2><i class="fas fa-globe"></i> تنظیمات DNS</h2>
+                    <div class="input-group">
+                        <label for="country">انتخاب کشور</label>
+                        <select id="country">
+                            <option value="us">ایالات متحده</option>
+                            <option value="uk">انگلستان</option>
+                            <option value="de">آلمان</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv4 اصلی</label>
+                        <input type="text" id="ipv4Primary" readonly>
+                        <button class="copy-button" onclick="copyToClipboard('ipv4Primary', this)" aria-label="کپی">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv4 ثانویه</label>
+                        <input type="text" id="ipv4Secondary" readonly>
+                        <button class="copy-button" onclick="copyToClipboard('ipv4Secondary', this)" aria-label="کپی">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv6 اصلی</label>
+                        <input type="text" id="ipv6Primary" readonly>
+                        <button class="copy-button" onclick="copyToClipboard('ipv6Primary', this)" aria-label="کپی">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv6 ثانویه</label>
+                        <input type="text" id="ipv6Secondary" readonly>
+                        <button class="copy-button" onclick="copyToClipboard('ipv6Secondary', this)" aria-label="کپی">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <button class="btn" id="generateDNSBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        تولید DNS
+                    </button>
+                </div>
+
+                <!-- تنظیمات سرور سوئد -->
+                <div class="card">
+                    <h2><i class="fas fa-server"></i> سرور سوئد</h2>
+                    <div class="input-group">
+                        <label>IPv4</label>
+                        <input type="text" id="swedenIPv4" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv6-1</label>
+                        <input type="text" id="swedenIPv6_1" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>IPv6-2</label>
+                        <input type="text" id="swedenIPv6_2" readonly>
+                    </div>
+                    <button class="btn" onclick="generateSwedenIPs()">
+                        <i class="fas fa-sync-alt"></i>
+                        تولید IPها
+                    </button>
+                    <button class="btn" onclick="copySwedenIPs()">
+                        <i class="far fa-copy"></i>
+                        کپی به کلیپ‌بورد
+                    </button>
+                </div>
+
+                <!-- تنظیمات سرور ویتوری -->
+                <div class="card">
+                    <h2><i class="fas fa-server"></i> سرور ویتوری</h2>
+                    <div class="input-group">
+                        <label>آدرس سرور</label>
+                        <input type="text" id="vitoriServer" readonly>
+                        <button class="copy-button" onclick="copyToClipboard('vitoriServer', this)" aria-label="کپی">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <button class="btn" onclick="getVitoriServer()">
+                        <i class="fas fa-sync-alt"></i>
+                        دریافت سرور
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div class="success-message" id="successMessage">کپی شد!</div>
+    <div class="success-message" id="successMessage">کپی شد!</div>
 
-  <script>
-    // تابعی برای محاسبه تاریخ انقضا با اضافه کردن تعداد روز مشخص
-    function getExpiryDate(days) {
-      const date = new Date();
-      date.setDate(date.getDate() + days);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}/${month}/${day}`;
-    }
+    <script>
+        // تابعی برای محاسبه تاریخ انقضا با اضافه کردن تعداد روز مشخص
+        function getExpiryDate(days) {
+            const date = new Date();
+            date.setDate(date.getDate() + days);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}/${month}/${day}`;
+        }
 
-    const USERS = {
-      'hamed': { password: 'hamed', expire: null },
-      'user30': { password: 'pass30', expire: getExpiryDate(30) },
-      'user60': { password: 'pass60', expire: getExpiryDate(60) }
-    };
+        const USERS = {
+            'hamed': { password: 'hamed', expire: null },
+            'user30': { password: 'pass30', expire: getExpiryDate(30) },
+            'user60': { password: 'pass60', expire: getExpiryDate(60) }
+        };
+    </script>
 
-  </script>
+    <script>
+        (function () {
+            // ------------------- AUTHENTICATION -------------------
+            const authPage = document.getElementById('authPage');
+            const mainContent = document.getElementById('mainContent');
+            const loginError = document.getElementById('loginError');
 
-  <script>
-    (function () {
-      // ------------------- AUTHENTICATION -------------------
-      const authPage = document.getElementById('authPage');
-      const mainContent = document.getElementById('mainContent');
-      const loginError = document.getElementById('loginError');
+            document.getElementById('loginForm').addEventListener('submit', e => {
+                e.preventDefault();
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
 
-      document.getElementById('loginForm').addEventListener('submit', e => {
-        e.preventDefault();
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
+                if (USERS[username]) {
+                    if (USERS[username].password === password) {
+                        // بررسی تاریخ انقضا تنها در صورتی که expire مقدار داشته باشد (یعنی null نباشد)
+                        if (USERS[username].expire !== null) {
+                            const expireDate = new Date(USERS[username].expire);
+                            if (new Date() > expireDate) {
+                                loginError.textContent = "اعتبار شما منقضی شده است.";
+                                loginError.style.display = 'block';
+                                return;
+                            }
+                        }
+                        authPage.classList.remove('active');
+                        mainContent.classList.add('active');
+                        loginError.style.display = 'none';
+                        generateDNS();
+                    } else {
+                        loginError.textContent = "نام کاربری یا رمز عبور اشتباه است.";
+                        loginError.style.display = 'block';
+                        document.getElementById('password').value = '';
+                    }
+                } else {
+                    loginError.textContent = "نام کاربری یا رمز عبور اشتباه است.";
+                    loginError.style.display = 'block';
+                    document.getElementById('password').value = '';
+                }
+            });
 
-        if (USERS[username]) {
-          if (USERS[username].password === password) {
-            // بررسی تاریخ انقضا تنها در صورتی که expire مقدار داشته باشد (یعنی null نباشد)
-            if (USERS[username].expire !== null) {
-              const expireDate = new Date(USERS[username].expire);
-              if (new Date() > expireDate) {
-                loginError.textContent = "اعتبار شما منقضی شده است.";
-                loginError.style.display = 'block';
-                return;
-              }
+
+            // ------------------- CLIPBOARD FUNCTIONS -------------------
+            // تابع کپی به کلیپ‌بورد در فضای سراسری (global)
+            window.copyToClipboard = function (elementId, btn) {
+                const text = document.getElementById(elementId).value;
+                if (!text) {
+                    alert("متنی برای کپی وجود ندارد!");
+                    return;
+                }
+                copyText(text).then(() => {
+                    if (btn) {
+                        const originalIcon = btn.innerHTML;
+                        btn.innerHTML = '<i class="fas fa-check-circle"></i>';
+                        btn.classList.add('animate');
+                        setTimeout(() => {
+                            btn.innerHTML = originalIcon;
+                            btn.classList.remove('animate');
+                        }, 1500);
+                    }
+                    showSuccessMessage();
+                }).catch(err => {
+                    alert("خطا در کپی: " + err);
+                });
+            };
+
+            function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                } else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = text;
+                    textArea.style.position = "fixed";
+                    textArea.style.top = 0;
+                    textArea.style.left = 0;
+                    textArea.style.width = "2em";
+                    textArea.style.height = "2em";
+                    textArea.style.padding = 0;
+                    textArea.style.border = "none";
+                    textArea.style.outline = "none";
+                    textArea.style.boxShadow = "none";
+                    textArea.style.background = "transparent";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        const successful = document.execCommand("copy");
+                        if (!successful) {
+                            throw new Error("Copy command was unsuccessful");
+                        }
+                        return Promise.resolve();
+                    } catch (err) {
+                        return Promise.reject(err);
+                    } finally {
+                        document.body.removeChild(textArea);
+                    }
+                }
             }
-            authPage.classList.remove('active');
-            mainContent.classList.add('active');
-            loginError.style.display = 'none';
-            generateDNS();
-          } else {
-            loginError.textContent = "نام کاربری یا رمز عبور اشتباه است.";
-            loginError.style.display = 'block';
-            document.getElementById('password').value = '';
-          }
-        } else {
-          loginError.textContent = "نام کاربری یا رمز عبور اشتباه است.";
-          loginError.style.display = 'block';
-          document.getElementById('password').value = '';
-        }
-      });
 
-
-      // ------------------- CLIPBOARD FUNCTIONS -------------------
-      // تابع کپی به کلیپ‌بورد در فضای سراسری (global)
-      window.copyToClipboard = function (elementId, btn) {
-        const text = document.getElementById(elementId).value;
-        if (!text) {
-          alert("متنی برای کپی وجود ندارد!");
-          return;
-        }
-        copyText(text).then(() => {
-          if (btn) {
-            const originalIcon = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check-circle"></i>';
-            btn.classList.add('animate');
-            setTimeout(() => {
-              btn.innerHTML = originalIcon;
-              btn.classList.remove('animate');
-            }, 1500);
-          }
-          showSuccessMessage();
-        }).catch(err => {
-          alert("خطا در کپی: " + err);
-        });
-      };
-
-      function copyText(text) {
-        if (navigator.clipboard && window.isSecureContext) {
-          return navigator.clipboard.writeText(text);
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = text;
-          textArea.style.position = "fixed";
-          textArea.style.top = 0;
-          textArea.style.left = 0;
-          textArea.style.width = "2em";
-          textArea.style.height = "2em";
-          textArea.style.padding = 0;
-          textArea.style.border = "none";
-          textArea.style.outline = "none";
-          textArea.style.boxShadow = "none";
-          textArea.style.background = "transparent";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          try {
-            const successful = document.execCommand("copy");
-            if (!successful) {
-              throw new Error("Copy command was unsuccessful");
+            function showSuccessMessage() {
+                const msg = document.getElementById('successMessage');
+                msg.style.display = 'block';
+                setTimeout(() => { msg.style.display = 'none'; }, 1500);
             }
-            return Promise.resolve();
-          } catch (err) {
-            return Promise.reject(err);
-          } finally {
-            document.body.removeChild(textArea);
-          }
-        }
-      }
 
-      function showSuccessMessage() {
-        const msg = document.getElementById('successMessage');
-        msg.style.display = 'block';
-        setTimeout(() => { msg.style.display = 'none'; }, 1500);
-      }
+            // ------------------- THEME TOGGLE -------------------
+            window.toggleTheme = function () {
+                const body = document.body;
+                const themeIcon = document.querySelector('.theme-toggle i');
+                if (body.getAttribute('data-theme') === 'light') {
+                    body.removeAttribute('data-theme');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    body.setAttribute('data-theme', 'light');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            };
 
-      // ------------------- THEME TOGGLE -------------------
-      window.toggleTheme = function () {
-        const body = document.body;
-        const themeIcon = document.querySelector('.theme-toggle i');
-        if (body.getAttribute('data-theme') === 'light') {
-          body.removeAttribute('data-theme');
-          themeIcon.classList.replace('fa-sun', 'fa-moon');
-        } else {
-          body.setAttribute('data-theme', 'light');
-          themeIcon.classList.replace('fa-moon', 'fa-sun');
-        }
-      };
+            // ------------------- DNS FUNCTIONS -------------------
+            const ipRanges = {
+                us: {
+                    ipv4: ['214.0.0.0/8', '30.0.0.0/8'],
+                    ipv6: ['2602:300::/24', '2600:1700::/28']
+                },
+                uk: {
+                    ipv4: ['32.42.16.0/20', '32.58.132.0/22'],
+                    ipv6: ['2a00:2381:cfb3::/48', '2a00:2381:d0ab::/48']
+                },
+                de: {
+                    ipv4: ['84.128.0.0/10', '91.0.0.0/10'],
+                    ipv6: ['2003:1800::/21', '2003:1800::/22']
+                }
+            };
 
-      // ------------------- DNS FUNCTIONS -------------------
-      const ipRanges = {
-        us: {
-          ipv4: ['214.0.0.0/8', '30.0.0.0/8'],
-          ipv6: ['2602:300::/24', '2600:1700::/28']
-        },
-        uk: {
-          ipv4: ['32.42.16.0/20', '32.58.132.0/22'],
-          ipv6: ['2a00:2381:cfb3::/48', '2a00:2381:d0ab::/48']
-        },
-        de: {
-          ipv4: ['84.128.0.0/10', '91.0.0.0/10'],
-          ipv6: ['2003:1800::/21', '2003:1800::/22']
-        }
-      };
+            function extractPrefix(ipRange) {
+                return ipRange.split('/')[0];
+            }
 
-      function extractPrefix(ipRange) {
-        return ipRange.split('/')[0];
-      }
+            function generateRandomIPv4FromCIDR(ipCIDR) {
+                const [ip, maskStr] = ipCIDR.split('/');
+                const mask = parseInt(maskStr, 10);
+                const ipNum = ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0);
+                const hostBits = 32 - mask;
+                const networkPart = ipNum & (~((1 << hostBits) - 1));
+                const randomOffset = Math.floor(Math.random() * (2 ** hostBits));
+                const randomIpNum = networkPart + randomOffset;
+                return [
+                    (randomIpNum >> 24) & 255,
+                    (randomIpNum >> 16) & 255,
+                    (randomIpNum >> 8) & 255,
+                    randomIpNum & 255
+                ].join('.');
+            }
 
-      function generateRandomIPv4FromCIDR(ipCIDR) {
-        const [ip, maskStr] = ipCIDR.split('/');
-        const mask = parseInt(maskStr, 10);
-        const ipNum = ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0);
-        const hostBits = 32 - mask;
-        const networkPart = ipNum & (~((1 << hostBits) - 1));
-        const randomOffset = Math.floor(Math.random() * (2 ** hostBits));
-        const randomIpNum = networkPart + randomOffset;
-        return [
-          (randomIpNum >> 24) & 255,
-          (randomIpNum >> 16) & 255,
-          (randomIpNum >> 8) & 255,
-          randomIpNum & 255
-        ].join('.');
-      }
+            function generateRandomIPv6(prefix) {
+                prefix = extractPrefix(prefix);
+                let segments;
+                if (prefix.includes('::')) {
+                    const parts = prefix.split('::');
+                    const left = parts[0] ? parts[0].split(':').filter(s => s !== '') : [];
+                    const right = parts[1] ? parts[1].split(':').filter(s => s !== '') : [];
+                    const missing = 8 - (left.length + right.length);
+                    const randomMiddle = Array.from({ length: missing }, () =>
+                        Math.floor(Math.random() * 0x10000).toString(16)
+                    );
+                    segments = [...left, ...randomMiddle, ...right];
+                } else {
+                    segments = prefix.split(':').filter(s => s !== '');
+                    const missing = 8 - segments.length;
+                    const randomSegments = Array.from({ length: missing }, () =>
+                        Math.floor(Math.random() * 0x10000).toString(16)
+                    );
+                    segments = segments.concat(randomSegments);
+                }
+                segments = segments.map(seg => seg.padStart(4, '0'));
+                return segments.join(':');
+            }
 
-      function generateRandomIPv6(prefix) {
-        prefix = extractPrefix(prefix);
-        let segments;
-        if (prefix.includes('::')) {
-          const parts = prefix.split('::');
-          const left = parts[0] ? parts[0].split(':').filter(s => s !== '') : [];
-          const right = parts[1] ? parts[1].split(':').filter(s => s !== '') : [];
-          const missing = 8 - (left.length + right.length);
-          const randomMiddle = Array.from({ length: missing }, () =>
-            Math.floor(Math.random() * 0x10000).toString(16)
-          );
-          segments = [...left, ...randomMiddle, ...right];
-        } else {
-          segments = prefix.split(':').filter(s => s !== '');
-          const missing = 8 - segments.length;
-          const randomSegments = Array.from({ length: missing }, () =>
-            Math.floor(Math.random() * 0x10000).toString(16)
-          );
-          segments = segments.concat(randomSegments);
-        }
-        segments = segments.map(seg => seg.padStart(4, '0'));
-        return segments.join(':');
-      }
+            function generateDNS() {
+                const country = document.getElementById('country').value;
+                const ranges = ipRanges[country];
 
-      function generateDNS() {
-        const country = document.getElementById('country').value;
-        const ranges = ipRanges[country];
+                document.getElementById('ipv4Primary').value = generateRandomIPv4FromCIDR(ranges.ipv4[0]);
+                document.getElementById('ipv4Secondary').value = generateRandomIPv4FromCIDR(ranges.ipv4[1]);
+                document.getElementById('ipv6Primary').value = generateRandomIPv6(ranges.ipv6[0]);
+                document.getElementById('ipv6Secondary').value = generateRandomIPv6(ranges.ipv6[1]);
+            }
 
-        document.getElementById('ipv4Primary').value = generateRandomIPv4FromCIDR(ranges.ipv4[0]);
-        document.getElementById('ipv4Secondary').value = generateRandomIPv4FromCIDR(ranges.ipv4[1]);
-        document.getElementById('ipv6Primary').value = generateRandomIPv6(ranges.ipv6[0]);
-        document.getElementById('ipv6Secondary').value = generateRandomIPv6(ranges.ipv6[1]);
-      }
+            document.getElementById('generateDNSBtn').addEventListener('click', generateDNS);
+            document.getElementById('country').addEventListener('change', generateDNS);
 
-      document.getElementById('generateDNSBtn').addEventListener('click', generateDNS);
-      document.getElementById('country').addEventListener('change', generateDNS);
+            // ------------------- SERVER OPTIONS -------------------
+            document.getElementById('serverOptions').addEventListener('click', e => {
+                const option = e.target.closest('.server-option');
+                if (!option) return;
+                document.querySelectorAll('.server-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
 
-      // ------------------- SERVER OPTIONS -------------------
-      document.getElementById('serverOptions').addEventListener('click', e => {
-        const option = e.target.closest('.server-option');
-        if (!option) return;
-        document.querySelectorAll('.server-option').forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-      });
+            // ------------------- SWEDEN IP GENERATOR -------------------
+            const ipToNumber = ip => ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0);
+            const numberToIp = num => [(num >> 24) & 255, (num >> 16) & 255, (num >> 8) & 255, num & 255].join('.');
 
-      // ------------------- SWEDEN IP GENERATOR -------------------
-      const ipToNumber = ip => ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0);
-      const numberToIp = num => [(num >> 24) & 255, (num >> 16) & 255, (num >> 8) & 255, num & 255].join('.');
+            function generateRandomIPv4Sweden() {
+                const networkStart = ipToNumber("5.240.0.0");
+                const networkEnd = ipToNumber("5.243.255.255");
+                const rand = Math.floor(Math.random() * (networkEnd - networkStart + 1)) + networkStart;
+                return numberToIp(rand);
+            }
 
-      function generateRandomIPv4Sweden() {
-        const networkStart = ipToNumber("5.240.0.0");
-        const networkEnd = ipToNumber("5.243.255.255");
-        const rand = Math.floor(Math.random() * (networkEnd - networkStart + 1)) + networkStart;
-        return numberToIp(rand);
-      }
+            function bigIntToIPv6(bigInt) {
+                let hex = bigInt.toString(16).padStart(32, '0');
+                let parts = [];
+                for (let i = 0; i < 8; i++) {
+                    parts.push(hex.slice(i * 4, i * 4 + 4));
+                }
+                return parts.join(':');
+            }
 
-      function bigIntToIPv6(bigInt) {
-        let hex = bigInt.toString(16).padStart(32, '0');
-        let parts = [];
-        for (let i = 0; i < 8; i++) {
-          parts.push(hex.slice(i * 4, i * 4 + 4));
-        }
-        return parts.join(':');
-      }
+            function generateRandomIPv6SwedenBigInt() {
+                const fixed = BigInt("0x2a020120") << BigInt(96);
+                let rand = BigInt(0);
+                for (let i = 0; i < 3; i++) {
+                    const r = BigInt(Math.floor(Math.random() * (2 ** 32)));
+                    rand = (rand << BigInt(32)) + r;
+                }
+                rand = rand & ((BigInt(1) << BigInt(96)) - BigInt(1));
+                return fixed + rand;
+            }
 
-      function generateRandomIPv6SwedenBigInt() {
-        const fixed = BigInt("0x2a020120") << BigInt(96);
-        let rand = BigInt(0);
-        for (let i = 0; i < 3; i++) {
-          const r = BigInt(Math.floor(Math.random() * (2 ** 32)));
-          rand = (rand << BigInt(32)) + r;
-        }
-        rand = rand & ((BigInt(1) << BigInt(96)) - BigInt(1));
-        return fixed + rand;
-      }
+            let swedenIPv4 = null;
+            let swedenIPv6_1 = null;
+            let swedenIPv6_2 = null;
 
-      let swedenIPv4 = null;
-      let swedenIPv6_1 = null;
-      let swedenIPv6_2 = null;
+            window.generateSwedenIPs = function () {
+                try {
+                    swedenIPv4 = generateRandomIPv4Sweden();
+                    swedenIPv6_1 = generateRandomIPv6SwedenBigInt();
+                    swedenIPv6_2 = swedenIPv6_1 + BigInt(1);
+                    document.getElementById("swedenIPv4").value = swedenIPv4;
+                    document.getElementById("swedenIPv6_1").value = bigIntToIPv6(swedenIPv6_1);
+                    document.getElementById("swedenIPv6_2").value = bigIntToIPv6(swedenIPv6_2);
+                } catch (error) {
+                    alert("خطا در تولید آدرس‌ها: " + error);
+                }
+            };
 
-      window.generateSwedenIPs = function () {
-        try {
-          swedenIPv4 = generateRandomIPv4Sweden();
-          swedenIPv6_1 = generateRandomIPv6SwedenBigInt();
-          swedenIPv6_2 = swedenIPv6_1 + BigInt(1);
-          document.getElementById("swedenIPv4").value = swedenIPv4;
-          document.getElementById("swedenIPv6_1").value = bigIntToIPv6(swedenIPv6_1);
-          document.getElementById("swedenIPv6_2").value = bigIntToIPv6(swedenIPv6_2);
-        } catch (error) {
-          alert("خطا در تولید آدرس‌ها: " + error);
-        }
-      };
+            window.copySwedenIPs = function () {
+                if (swedenIPv4 && swedenIPv6_1 && swedenIPv6_2) {
+                    const text = `IPv4: ${swedenIPv4}\nIPv6-1: ${bigIntToIPv6(swedenIPv6_1)}\nIPv6-2: ${bigIntToIPv6(swedenIPv6_2)}`;
+                    copyText(text)
+                        .then(() => alert("آدرس‌های IP کپی شدند."))
+                        .catch(err => alert("خطا در کپی: " + err));
+                } else {
+                    alert("ابتدا آدرس‌ها را تولید کنید.");
+                }
+            };
 
-      window.copySwedenIPs = function () {
-        if (swedenIPv4 && swedenIPv6_1 && swedenIPv6_2) {
-          const text = `IPv4: ${swedenIPv4}\nIPv6-1: ${bigIntToIPv6(swedenIPv6_1)}\nIPv6-2: ${bigIntToIPv6(swedenIPv6_2)}`;
-          copyText(text)
-            .then(() => alert("آدرس‌های IP کپی شدند."))
-            .catch(err => alert("خطا در کپی: " + err));
-        } else {
-          alert("ابتدا آدرس‌ها را تولید کنید.");
-        }
-      };
-    })();
-  </script>
-  <script src="https://fastly.jsdelivr.net/npm/disable-devtool/disable-devtool.min.js" disable-devtool-auto
-    disable-menu="true" url="https://cia.gov"></script>
+            // ------------------- VITORI SERVER FUNCTIONS -------------------
+            const vitoriServers = [
+                "vless://aa69559a-0fe1-4df6-9a3d-2cd31519209a@ilu.jact.ir:2083?type=grpc&serviceName=&authority=&security=reality&pbk=NPdXEraLlFLxdzT5jT-PMmJyoF85xj6Q5II8VEqbm08&fp=randomized&sni=refersion.com&sid=f1ebce9e3cc3a2a4&spx=%2F#TiMxstore",
+            ];
+
+            window.getVitoriServer = function () {
+                const randomIndex = Math.floor(Math.random() * vitoriServers.length);
+                const server = vitoriServers[randomIndex];
+                document.getElementById('vitoriServer').value = server;
+            };
+        })();
+    </script>
+    <script src="https://fastly.jsdelivr.net/npm/disable-devtool/disable-devtool.min.js" disable-devtool-auto
+        disable-menu="true" url="https://cia.gov"></script>
 </body>
 
 </html>
